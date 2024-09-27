@@ -1,0 +1,24 @@
+Features
+1. User login
+2. User signup
+3. Event creation
+4. Event joining
+5. Chatting in Event
+
+Entities:
+User: uname*, email*, password*, gender, age
+Event: title*, desc*, hosted_by*, type (public/private), event_id*, event_passcode*
+EventConv: event_id, transcript : {uname, email, message, timestamp}, status (active/concluded)
+
+Services:
+userService : 
+	1. Register new user
+	2. Login existing user
+eventService:
+	1. Create an event
+	2. View all public events
+	3. User to join the event
+	4. User to leave the event
+eventConvService:
+	1. Send a message
+	2. View the messages sequentially

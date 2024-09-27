@@ -1,0 +1,27 @@
+services:
+  apigateway:
+    build: ./apigateway
+    ports:
+      - "7878:7878" # Map container port 3000 to localhost port 3000
+    volumes:
+      - ./apigateway:/app # Mount the frontend code so changes reflect
+    environment:
+      - NODE_ENV=development
+
+  userService:
+    build: ./userService
+    ports:
+      - "8081:8081" # Map container port 4000 to localhost port 4000
+    volumes:
+      - ./userService:/app # Mount the backend code so changes reflect
+    environment:
+      - NODE_ENV=development
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "1090:1090" # Map container port 3000 to localhost port 3000
+    volumes:
+      - ./frontend:/app # Mount the frontend code so changes reflect
+    environment:
+      - NODE_ENV=development

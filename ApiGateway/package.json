@@ -1,0 +1,17 @@
+{
+  "name": "apigateway",
+  "version": "1.0.0",
+  "description": "",
+  "main": "api_gateway.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apigateway": "file:",
+    "express": "^4.19.2",
+    "express-http-proxy": "^2.0.0",
+    "express-proxy": "^0.0.2"
+  }
+}
