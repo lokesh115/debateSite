@@ -12,6 +12,7 @@
     "apigateway": "file:",
     "express": "^4.19.2",
     "express-http-proxy": "^2.0.0",
-    "express-proxy": "^0.0.2"
+    "express-proxy": "^0.0.2",
+    "nodemon": "^3.1.7"
   }
 }

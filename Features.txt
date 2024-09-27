@@ -22,3 +22,7 @@ eventService:
 eventConvService:
 	1. Send a message
 	2. View the messages sequentially
+
+Docker commands:
+docker-compose down
+docker-compose up --build
