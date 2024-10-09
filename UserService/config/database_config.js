@@ -6,16 +6,11 @@ function config() {
     const mongoPort = '27017';
     const mongoDB = 'UserService';
     
-    const mongoURI = `mongodb://${mongoHost}:${mongoPort}/${mongoDB}`;
+    const mongoURI = `mongodb://userservice-db:27017/userservice-db `;
 
-    // Connection options
-    const options = {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    };
 
     // Establish the connection
-    mongoose.connect(mongoURI, options)
+    mongoose.connect(mongoURI)
         .then(() => {
             console.log('Connected to MongoDB');
         })

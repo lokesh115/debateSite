@@ -6,14 +6,18 @@ function createNewEvent(eventData){
     return newEvent;
 }
 
-async function fetchAllEvents(){
-    const allEvents = await EventModel.find();
-    return allEvents;
+async function generateEventId(){
+    return 1111;
 }
 
-async function fetchAnEvent(userData){
-    const event = await EventModel.findOne({"uname":userData.uname});
+async function fetchAllEvents(){
+    const allEvents = await EventModel.find();
+    return allEvents
+}
+
+async function fetchAnEvent(eventData){
+    const event = await EventModel.findOne({"event_id":eventData.event_id});
     return event;
 }
 
-module.exports = {createNewEvent,fetchAllEvents,fetchAnEvent};
+module.exports = {generateEventId,createNewEvent,fetchAllEvents,fetchAnEvent};

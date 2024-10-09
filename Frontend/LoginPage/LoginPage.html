@@ -117,7 +117,7 @@
             // Show the API response to the user
             const responseMessage = document.getElementById('responseMessage');
             if (response.ok) {
-                window.location.href = `homePage?uname=${username}`;
+                window.location.href = `./homePage?uname=${username}`;
             } else {
                 responseMessage.style.color = 'red';
                 responseMessage.textContent = result.message || 'Invalid login credentials';

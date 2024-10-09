@@ -1,40 +1,66 @@
 services:
-  mongodb:
+  eventservice-db:
     image: mongo:latest
-    container_name: mongodb
+    container_name: eventservice-db
     ports:
       - "27017:27017"
     volumes:
-      - ./data/db:/data/db
+      - eventservice_data:/data/db
+
+  userservice-db:
+    image: mongo:latest
+    container_name: userservice-db
+    ports:
+      - "27018:27017"  # External 27018 mapped to internal 27017
+    volumes:
+      - userservice_data:/data/db
 
   userservice:
     build: ./userservice
     ports:
-      - "8081:8081" # Map container port 4000 to localhost port 4000
+      - "8081:8081"
     volumes:
-      - ./userservice:/app # Mount the backend code so changes reflect
+      - ./userservice:/app
     environment:
       - NODE_ENV=development
+      - MONGO_URL=mongodb://userservice-db:27017/userservice-db  # Internal MongoDB URL uses 27017
     depends_on:
-      - mongodb
+      - userservice-db
+
+  eventservice:
+    build: ./eventservice
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./eventservice:/app
+    environment:
+      - NODE_ENV=development
+      - MONGO_URL=mongodb://eventservice-db:27017/eventservice-db
+    depends_on:
+      - eventservice-db
 
   frontend:
     build: ./frontend
     ports:
-      - "1090:1090" # Map container port 3000 to localhost port 3000
+      - "1090:1090"
     volumes:
-      - ./frontend:/app # Mount the frontend code so changes reflect
+      - ./frontend:/app
     environment:
       - NODE_ENV=development
-    
+
   apigateway:
     build: ./apigateway
     ports:
-      - "7878:7878" # Map container port 3000 to localhost port 3000
+      - "7878:7878"
     volumes:
-      - ./apigateway:/app # Mount the frontend code so changes reflect
+      - ./apigateway:/app
     environment:
       - NODE_ENV=development
     depends_on:
       - frontend
       - userservice
+      - eventservice
+
+volumes:
+  eventservice_data:
+  userservice_data:
