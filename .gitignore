@@ -1,5 +1,4 @@
 ApiGateway/node_modules
-EventService/node_modules
+Backend/node_modules
 Frontend/node_modules
-UserService/node_modules
 .data

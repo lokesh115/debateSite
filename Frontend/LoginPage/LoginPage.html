@@ -102,8 +102,11 @@
         const data = { uname: username, password: password };
 
         try {
+            let apiUriResponse = await fetch('api/config')
+            apiUriResponse=await apiUriResponse.json()
+            const apiUri=apiUriResponse.apiUri;
             // Send a POST request to your local API
-            const response = await fetch('http://localhost:7878/userService/loginUser', {
+            const response = await fetch(apiUri+'/backend/user/loginUser', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

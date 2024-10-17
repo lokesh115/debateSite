@@ -10,9 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "apigateway": "file:",
-    "express": "^4.19.2",
+    "express": "^4.21.1",
     "express-http-proxy": "^2.0.0",
     "express-proxy": "^0.0.2",
+    "http-proxy-middleware": "^3.0.3",
     "nodemon": "^3.1.7"
   }
 }

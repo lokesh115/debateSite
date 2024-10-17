@@ -2,24 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Event</title>
-    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Function to handle form submission
+        async function submitEventForm(event) {
+            event.preventDefault();  // Prevent the default form submission
+            // Function to get query parameter by name
+            function getQueryParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+
+            // Get the username from the URL and display it
+            const username = getQueryParam('uname');
+            
+            // Collect form data
+            const eventData = {
+                title: document.getElementById('title').value,
+                desc: document.getElementById('desc').value,
+                hosted_by: username,
+                type: document.getElementById('type').value, // Convert to a number
+                event_passcode: document.getElementById('event_passcode').value
+            };
+
+            // Send the collected data as a POST request to the event creation API
+            let apiUriResponse = await fetch('api/config')
+            apiUriResponse=await apiUriResponse.json()
+            const apiUri=apiUriResponse.apiUri;
+
+            fetch(apiUri+'/backend/event/registerNewEvent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(eventData)  // Convert the event data to a JSON string
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);  // Log the success message
+                alert('Event created successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);  // Log any errors
+                alert('Error creating event!');
+            });
+        }
+    </script>
 </head>
 <body>
-    <div class="header">
-        <h1>Create a New Event</h1>
-        <button class="logout-btn" onclick="logout()">Logout</button>
-    </div>
-    <div class="create-event-form">
-        <!-- Form for creating an event goes here -->
-        <form>
-            <input type="text" placeholder="Event Name" required />
-            <input type="text" placeholder="Event ID" required />
-            <button type="submit">Create Event</button>
-        </form>
-    </div>
-    <script src="script.js"></script>
+    <h1>Create Event</h1>
+    <form id="eventForm" onsubmit="submitEventForm(event)">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required><br><br>
+    
+        <label for="desc">Description:</label>
+        <textarea id="desc" name="desc" required></textarea><br><br>
+    
+        <label for="type">Type:</label>
+        <select id="type" name="type" required>
+            <option value="public">Public</option>
+            <option value="private">Private</option>
+        </select><br><br>
+    
+        <label for="event_passcode">Event Passcode:</label>
+        <input type="text" id="event_passcode" name="event_passcode"><br><br>
+    
+        <input type="submit" value="Create Event">
+    </form>
+    
 </body>
 </html>

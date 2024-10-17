@@ -1,17 +1,21 @@
 var proxy = require('express-http-proxy');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
 var app = require('express')();
 
 //Frontend
-const uiServiceURI = "http://frontend:1090"
+const uiServiceURI = "http://localhost:1090"
 app.use('/uiService', proxy(uiServiceURI))
 
 //userService
-const userServiceURI = "http://userservice:8081"
-app.use('/userService', proxy(userServiceURI))
+const userServiceURI = 'http://localhost:8081';
+app.use('/backend', createProxyMiddleware({
+    target: userServiceURI,
+    changeOrigin: true,
+    ws: true, // Enable WebSocket proxying
+}));
 
-//eventService
-const eventServiceURI = "http://eventservice:8082"
-app.use('/eventService', proxy(eventServiceURI))
+
 
 const PORT = 7878
 app.listen(PORT,()=>{

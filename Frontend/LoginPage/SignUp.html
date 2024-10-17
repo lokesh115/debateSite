@@ -112,13 +112,18 @@
         const data = { uname: username, email: email, password: password, gender: gender, age: age };
 
         try {
-            const response = await fetch('http://localhost:7878/userService/registerUser', {
+            let apiUriResponse = await fetch('api/config')
+            apiUriResponse=await apiUriResponse.json()
+            const apiUri=apiUriResponse.apiUri;
+          
+            const response = await fetch(apiUri+'/backend/user/registerUser', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
 
             const result = await response.json();
+            
 
             if (response.ok) {
                 window.location.href = `login?uname=${username}`;
@@ -126,6 +131,7 @@
                 document.getElementById('responseMessage').textContent = result.error || 'Sign up failed';
             }
         } catch (error) {
+            console.log(error)
             document.getElementById('responseMessage').textContent = 'Error connecting to the server.';
         }
     });
